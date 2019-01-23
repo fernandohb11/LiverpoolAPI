@@ -10,24 +10,14 @@ class App extends Component {
   state = {
            products:['']
          }
-  
-  
-  
-  
   performSearch = (e) => {
-  
-    const searchTerm = e.target.value
-    
-  
-    const urlString = "https://www.liverpool.com.mx/tienda/?s="+searchTerm+"&d3106047a194921c01969dfdec083925=json"
+  const searchTerm = e.target.value
+  const urlString = "https://www.liverpool.com.mx/tienda/?s="+searchTerm+"&d3106047a194921c01969dfdec083925=json"
         axios.get(urlString)
           .then(r => {
-  
-            
             if (r.data.contents) {
               this.setState({ products: r.data.contents[0].mainContent[3].contents[0].records })
-              localStorage.setItem('si busco', searchTerm)
-             
+              localStorage.setItem('lastSearch', searchTerm)
             }
           })
           .catch(e => console.log(e))
@@ -35,11 +25,10 @@ class App extends Component {
  
   render() {
     const products = this.state.products
-    let val = localStorage.getItem('si busco')
+    let val = localStorage.getItem('lastSearch')
     console.log(val)
     return (
       <div >
-      
         <Layout />
         <input style={{
           fontSize: 20,
